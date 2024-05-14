@@ -1,12 +1,10 @@
-# Getting Started with Tetris on DOXA
+# Welcome to the S24 WAT.ai x DSC Tetris Challenge, hosted on DOXA!
 
-This repository contains everything you need to get started with Tetris on DOXA. For more information, check out the [competition page](https://doxaai.com/competition/tetris). 😎
-
-Feel free to fork this repository and use it as the foundation for your own agents. You can also join the conversation on the [DOXA Community Discord server](https://discord.gg/MUvbQ3UYcf). 👀
+This repository contains everything you need to get started with Tetris on DOXA. For more information, check out the [competition page](https://doxaai.com/competition/watai-tetris). 😎
 
 ## Prerequisites
 
-Before you begin, please ensure that you have Python 3.9+ and the DOXA CLI installed.
+Before you begin, please ensure that you have Python 3.10+ and the DOXA CLI installed.
 
 If you do not yet have the DOXA CLI installed, you may do so using `pip`:
 
@@ -118,7 +116,7 @@ Before you can submit your agent to DOXA, you must first ensure that you are log
 doxa login
 ```
 
-You should also make sure that you are enrolled on the [Tetris competition page](https://doxaai.com/competition/tetris).
+You should also make sure that you are enrolled on the [Tetris competition page](https://doxaai.com/competition/watai-tetris).
 
 Then, when you are ready to submit your agent (contained within the `submission` directory) to DOXA, run the following command from the root of the repository:
 
