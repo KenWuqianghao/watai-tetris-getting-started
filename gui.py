@@ -164,9 +164,13 @@ class HumanAgent(BaseAgent):
 async def main():
     if len(sys.argv) > 1 and sys.argv[1] == "--live":
         agent = HumanAgent()
+
+    if len(sys.argv) > 1 and sys.argv[1] == "--sample":
+        from submission.sample_agent import SelectedAgent
+        agent = SelectedAgent()
+
     else:
         from submission.agent import SelectedAgent  # your agent
-
         agent = SelectedAgent()
 
     ui = TetrisPygame()

@@ -1,5 +1,6 @@
 from random import randrange
 from typing import Sequence, Union
+import numpy as np
 
 from tetris import Action, BaseAgent, Board, main
 
