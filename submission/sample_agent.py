@@ -6,8 +6,11 @@ from tetris import Action, BaseAgent, Board, main
 from tetris.constants import BOARD_HEIGHT, BOARD_WIDTH
 from tetris.moves import MOVES
 
-
 def calculate_heights(board):
+    """
+    :param board: the current game state
+    :return: a list containing the height of each block column on the board
+    """
     heights = []
 
     for x in range(BOARD_WIDTH):
@@ -22,6 +25,11 @@ def calculate_heights(board):
 
 
 def count_holes(board, heights):
+    """
+    :param board: the current game state
+    :param heights: the height of each block column
+    :return: the number of holes on the board
+    """
     holes = 0
     for x, h in enumerate(heights):
         if h <= 1:
@@ -34,8 +42,8 @@ def count_holes(board, heights):
     return holes
 
 
-class SampleAgent(BaseAgent):
-    def __init__(self, weights=[]) -> None:
+class HeuristicAgent(BaseAgent):
+    def __init__(self, weights) -> None:
         super().__init__()
         self.weights = weights
 
@@ -53,9 +61,15 @@ class SampleAgent(BaseAgent):
         """
 
         def score_moves(m):
+            """
+            :param m: a potential sequence of moves
+            :return: a metric that estimates the effectiveness of the input move sequence
+            """
+
+            # simulate the board after move sequence m
             b = board.with_moves(m)
 
-            # lines to clear
+            # number of potential lines to clear
             clearable_lines = b.find_lines_to_clear()
 
             # column heights
@@ -86,4 +100,16 @@ class SampleAgent(BaseAgent):
         return min(MOVES, key=score_moves)
 
 
-SelectedAgent = SampleAgent
+SelectedAgent = HeuristicAgent
+
+#####################################################################
+#   This runs your agent and communicates with DOXA over stdio,     #
+#   so please do not touch these lines unless you are comfortable   #
+#   with how DOXA works, otherwise your agent may not run.          #
+#####################################################################
+
+if __name__ == "__main__":
+    agent = SelectedAgent()
+
+    main(agent)
+
