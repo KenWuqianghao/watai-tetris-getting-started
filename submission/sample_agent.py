@@ -109,7 +109,7 @@ SelectedAgent = HeuristicAgent
 #####################################################################
 
 if __name__ == "__main__":
-    agent = SelectedAgent()
+    agent = SelectedAgent(np.array([1, 1, 1, 1, 1]))
 
     main(agent)
 
