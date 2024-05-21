@@ -14,7 +14,7 @@ class Game:
     running: bool
     board: Board
 
-    def __init__(self, agent: BaseAgent, seed: int = -1) -> None:
+    def __init__(self, agent: BaseAgent, seed: int = 89) -> None:
         self.agent = agent
         self.seed = seed
 

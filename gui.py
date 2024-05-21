@@ -161,21 +161,22 @@ class HumanAgent(BaseAgent):
 
             return Action.NOOP
 
-
+weights = [5.730354708248956, 17.06538196197617, 43.64981452159081, 20.677779467462987, -2.670664578038187, 12.140232919452366, 0.8730114754380225, -6.201370068803084, 0.1621296201722936]
+weights = [0.3314886226124948, 0.18991574173842685, -0.07478519830790947, -0.6226925803537278, -0.27493862637697886, 0.577224884007095, 1.551279829444542, 0.000844176718391876, 0.012858536971335575]
 async def main():
     if len(sys.argv) > 1 and sys.argv[1] == "--live":
         agent = HumanAgent()
 
     if len(sys.argv) > 1 and sys.argv[1] == "--sample":
         from submission.sample_agent import SelectedAgent
-        agent = SelectedAgent(np.array([0.35310319, 1.04032412, 1.53208598, 0.85040605, 0.14922837]))
+        agent = SelectedAgent(np.array(weights))
  
     else:
         from submission.agent import SelectedAgent  # your agent
         agent = SelectedAgent()
 
     ui = TetrisPygame()
-    await ui.run(Game(agent))
+    await ui.run(Game(agent, seed = 256))
 
 
 if __name__ == "__main__":

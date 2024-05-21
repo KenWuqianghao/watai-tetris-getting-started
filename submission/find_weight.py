@@ -17,40 +17,41 @@ import random
 import asyncio
 
 async def get_score(params):
-    v, w, x, y, z = params['v'], params['w'], params['x'], params['y'], params['z']
-    weights = np.array([v, w, x, y, z])
+    r, s, t, u, v, w, x, y, z = params['r'], params['s'], params['t'], params['u'], params['v'], params['w'], params['x'], params['y'], params['z']
+    weights = np.array([r, s, t, u, v, w, x, y, z])
     agent = SelectedAgent(weights)
-    scores_list = []
-    for trial in range(100):
+    scores = []
+    for i in range(3):
         GAME_SEED = random.randint(0, 1000)
         game = Game(agent, seed=GAME_SEED)
         async for item in game.run():
             pass
-        scores = {}
-        scores.setdefault(game.score, []).append(w)
-        max_score = max(scores.keys())
-        scores_list.append(max_score)
-    average_score = np.mean(scores_list)
-    return -average_score
+        scores.append(game.score)
+    average_score = -np.mean(scores)
+    return average_score
 
 def objective(params):
     loop = asyncio.get_event_loop()
     return loop.run_until_complete(get_score(params))
 
 space = {
-    'v': hp.uniform('v', -10, 10),
-    'w': hp.uniform('w', -10, 10),
-    'x': hp.uniform('x', -10, 10),
-    'y': hp.uniform('y', -10, 10),
-    'z': hp.uniform('z', -10, 10)
+    'r': hp.normal('r', 5, 10),
+    's': hp.normal('s', 17, 10),
+    't': hp.normal('t', 40, 10),
+    'u': hp.normal('u', 20, 10),
+    'v': hp.normal('v', 0, 10),
+    'w': hp.normal('w', 10, 10),
+    'x': hp.normal('x', 0, 10),
+    'y': hp.normal('y', -5, 10),
+    'z': hp.normal('z', 0, 10),
 }
 
 best = fmin(
     fn=objective, # Objective Function to optimize
     space=space, # Hyperparameter's Search Space
     algo=tpe.suggest, # Optimization algorithm (representative TPE)
-    max_evals=3000 # Number of optimization attempts
+    max_evals=100 # Number of optimization attempts
 )
 
-best_weights = [best['v'], best['w'], best['x'], best['y'], best['z']]
+best_weights = [best['r'], best['s'], best['t'], best['u'], best['v'], best['w'], best['x'], best['y'], best['z']]
 print(best_weights)
