@@ -4,6 +4,7 @@ import os
 import sys
 import time
 from io import BytesIO
+import numpy as np
 
 import pygame
 import requests
@@ -167,8 +168,8 @@ async def main():
 
     if len(sys.argv) > 1 and sys.argv[1] == "--sample":
         from submission.sample_agent import SelectedAgent
-        agent = SelectedAgent()
-
+        agent = SelectedAgent(np.array([0.35310319, 1.04032412, 1.53208598, 0.85040605, 0.14922837]))
+ 
     else:
         from submission.agent import SelectedAgent  # your agent
         agent = SelectedAgent()

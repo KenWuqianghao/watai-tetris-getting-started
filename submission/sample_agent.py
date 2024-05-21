@@ -94,7 +94,7 @@ class HeuristicAgent(BaseAgent):
                     total_spikiness,
                 ]
             )
-
+            
             return np.dot(self.weights, feature_vector)
 
         return min(MOVES, key=score_moves)
@@ -109,7 +109,6 @@ SelectedAgent = HeuristicAgent
 #####################################################################
 
 if __name__ == "__main__":
-    agent = SelectedAgent(np.array([1, 1, 1, 1, 1]))
-
+    w = [7.551385770181472, -2.7139623796583905, 6.3570363173895466, 7.950006016113665, 2.366147437990671]
+    agent = SelectedAgent(np.array(w))
     main(agent)
-
