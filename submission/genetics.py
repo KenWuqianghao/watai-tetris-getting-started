@@ -54,7 +54,7 @@ toolbox.register("mate", tools.cxBlend, alpha=0.5)
 toolbox.register("mutate", tools.mutGaussian, mu=0, sigma=1, indpb=0.2)
 toolbox.register("select", tools.selTournament, tournsize=3)
 
-population = toolbox.population(n=10)
+population = toolbox.population(n=100)
 final_population = algorithms.eaSimple(population, toolbox, cxpb=0.5, mutpb=0.2, ngen=100, verbose=True)
 print(final_population)
 best_weights = final_population[0]
