@@ -97,6 +97,10 @@ class HeuristicAgent(BaseAgent):
             
             total_blocks = sum(BOARD_WIDTH - line.count(None) for line in b)
 
+            left_emptiness = sum(1 for x in range(BOARD_WIDTH) if column_heights[x] == 0)
+            right_emptiness = sum(1 for x in range(BOARD_WIDTH) if column_heights[BOARD_WIDTH - x - 1] == 0)
+            center_emptiness = sum(1 for x in range(BOARD_WIDTH) if column_heights[x] == 0 and x > 1 and x < BOARD_WIDTH - 2)
+
             # feature vector
             feature_vector = np.array([
                 -len(clearable_lines),
@@ -108,10 +112,21 @@ class HeuristicAgent(BaseAgent):
                 total_height,
                 max_height,
                 weighted_holes,
+                left_emptiness,
+                right_emptiness,
+                center_emptiness
             ])
             
-            return np.dot(self.weights, feature_vector)
+            score = np.dot(self.weights, feature_vector)
+            
+            if len(clearable_lines) >= 2:
+                score = float('-inf')
+            
+            if not b.is_game_running():
+                score = float('inf')
 
+            return score
+        
         return min(MOVES, key=score_moves)
 
 SelectedAgent = HeuristicAgent
@@ -122,8 +137,8 @@ SelectedAgent = HeuristicAgent
 #   with how DOXA works, otherwise your agent may not run.          #
 #####################################################################
 if __name__ == "__main__":
-    weights = [1070.558745981553, 963.7975031106122, 1380.587323768055, 74.34870576097629, -800.7595753505859, 1159.9820521194808, 503.7611272855837, -3.7377129147859023, 14.857216139137405]
-    weights = [1282.499711876682, 1275.8145875674409, 1501.743576191133, 374.9599710995053, -750.3724423249874, 1358.3003212718686, 780.6393226684344, 115.75496461733854, -3.860261029035676]
-    weights = [ 1.46550562, -0.66736624,  1.85619377,  1.37476826,  0.42216046, 0.01825443,  1.06798135,  0.47391155,  0.06139508]
+    weights = [0.6161222852508982, 3683.333054527225, 61.86765240692307, -1.7965668217660635, -0.44346395803540994, 957.4515643158011, 2628.405761664556, -63.09247365268259, 0.01665550011904729]
+    weights = [1059.6773122574548, 3688.507755374621, 63.99221519900783, -2.136861886361613, 8.648616279998466, 960.8049734265385, 2623.3197690456636, -63.38334297511657, 0.671813882739172, 1016.8431165331463, 1059.6773122574548, 924.4418737706224]
+    weights = [240.35183629432146, -6.053133046881249, 63.81097752251967, -0.010673201605337187, 0.3486191627718447, 199.80586267932406, 1060.4195638828246, -7.867480710255641, 0.0015930841825072665, 121.70550775234003, 240.35183629432146, 1.2455805780899138]
     agent = SelectedAgent(np.array(weights))
     main(agent)
